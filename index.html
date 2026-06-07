@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WikiLens - Modern Wikipedia Search</title>
+    <!-- Bootstrap CSS for layout foundation -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous" />
+    <link rel="stylesheet" href="wiki.css" />
+</head>
+
+<body>
+    <!-- Theme Toggle Floating Button -->
+    <button id="themeToggle" class="theme-toggle-btn" aria-label="Toggle Theme" title="Toggle Light/Dark Theme">
+        <!-- Sun Icon -->
+        <svg class="sun-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="12" r="5"></circle>
+            <line x1="12" y1="1" x2="12" y2="3"></line>
+            <line x1="12" y1="21" x2="12" y2="23"></line>
+            <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+            <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+            <line x1="1" y1="12" x2="3" y2="12"></line>
+            <line x1="21" y1="12" x2="23" y2="12"></line>
+            <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+            <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+        </svg>
+        <!-- Moon Icon -->
+        <svg class="moon-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+        </svg>
+    </button>
+
+    <div class="container py-5">
+        <main class="main-container mx-auto">
+            <div class="wiki-search-header text-center">
+                <div class="logo-container">
+                    <img class="wiki-logo" src="https://d2clawv67efefq.cloudfront.net/ccbp-dynamic-webapps/wiki-logo-img.png" alt="Wikipedia logo" />
+                    <div class="logo-glow"></div>
+                </div>
+                <h1 class="app-title">WikiLens</h1>
+                <p class="app-subtitle">Discover the world's knowledge. Search Wikipedia instantly with a modern interface.</p>
+                
+                <form id="searchForm" class="search-box mx-auto" novalidate>
+                    <div class="search-input-wrapper">
+                        <!-- Search Icon -->
+                        <svg class="search-icon-svg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <circle cx="11" cy="11" r="8"></circle>
+                            <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+                        </svg>
+                        
+                        <input placeholder="What are you looking for?" type="search" class="search-input" id="searchInput" aria-label="Search Wikipedia" autocomplete="off" />
+                        
+                        <!-- Clear Button -->
+                        <button type="button" id="clearSearch" class="clear-btn d-none" aria-label="Clear Search" title="Clear Search">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <line x1="18" y1="6" x2="6" y2="18"></line>
+                                <line x1="6" y1="6" x2="18" y2="18"></line>
+                            </svg>
+                        </button>
+                    </div>
+                    
+                    <div class="actions-group mt-3 d-flex justify-content-center gap-2">
+                        <button type="submit" class="btn-custom btn-search">
+                            Search
+                        </button>
+                        <button type="button" id="randomButton" class="btn-custom btn-random" title="Explore a random article">
+                            <svg class="icon-dice" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect>
+                                <circle cx="8.5" cy="8.5" r="1.5"></circle>
+                                <circle cx="15.5" cy="15.5" r="1.5"></circle>
+                                <circle cx="15.5" cy="8.5" r="1.5"></circle>
+                                <circle cx="8.5" cy="15.5" r="1.5"></circle>
+                                <circle cx="12" cy="12" r="1.5"></circle>
+                            </svg>
+                            Random
+                        </button>
+                    </div>
+                </form>
+
+                <!-- Recent Searches Section -->
+                <div id="recentSearchesContainer" class="recent-searches-container d-none">
+                    <span class="recent-label">Recent Searches:</span>
+                    <div id="recentSearchesList" class="recent-searches-list"></div>
+                    <button type="button" id="clearHistoryBtn" class="btn-clear-history" title="Clear Search History">Clear All</button>
+                </div>
+            </div>
+
+            <!-- Loader / Spinner -->
+            <div class="d-none" id="spinner">
+                <div class="d-flex justify-content-center py-5">
+                    <div class="spinner-wave">
+                        <div class="rect1"></div>
+                        <div class="rect2"></div>
+                        <div class="rect3"></div>
+                        <div class="rect4"></div>
+                        <div class="rect5"></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Results Section -->
+            <section class="search-results-wrapper">
+                <div class="search-results" id="searchResults"></div>
+            </section>
+        </main>
+    </div>
+    
+    <script src="wiki.js"></script>
+</body>
+
+</html>
